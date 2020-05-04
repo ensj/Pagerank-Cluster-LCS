@@ -10,9 +10,9 @@ def lcsweight(f1, f2):
 	k = 1
 	w = 0
 	n = max([len(f1), len(f2)])
+	tree = Tree({'A': f1, 'B': f2})
 	while(k <= n):
 		l1 = [f1[x : x + k] for x in range(0, len(f1) - k + 1)]
-		tree = Tree({'A': f1, 'B': f2})
 
 		for el in l1:
 			count = [0, 0]
