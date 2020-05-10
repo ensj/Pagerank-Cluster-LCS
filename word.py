@@ -21,9 +21,11 @@ def lcsweight(f1, f2):
 					count[0] += 1  
 				else: 
 					count[1] += 1
-			if count[0] and count[1]:
-				w += max(count) * k/n
+			# min is chosen, so that larger files with similar words will not have an advantage over smaller files.
+			w += min(count) * k # weight the newly added min by k. Longer sequences of words will be weighted more compared to smaller ones.
 		k *= 2
+
+	w /= n
 
 	return round(w, 2)
 
