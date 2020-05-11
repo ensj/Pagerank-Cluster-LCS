@@ -9,25 +9,17 @@ import matplotlib.pyplot as plt
 def lcsweight(f1, f2):
 	k = 1
 	w = 0
-	n = max([len(f1), len(f2)])
-	tree = Tree({'A': f1, 'B': f2})
+	n = len(f1)
+	tree = Tree({'A': f2})
 	while(k <= n):
 		l1 = [f1[x : x + k] for x in range(0, len(f1) - k + 1)]
-
 		for el in l1:
-			count = [0, 0]
-			for i, p in tree.find_all(el):
-				if i == 'A':
-					count[0] += 1  
-				else: 
-					count[1] += 1
-			# min is chosen, so that larger files with similar words will not have an advantage over smaller files.
-			w += min(count) * k # weight the newly added min by k. Longer sequences of words will be weighted more compared to smaller ones.
+			if(tree.find(el)):
+				w += 1
+				break # if a sequence of k words exists between both files, break the loop and update k
 		k *= 2
 
-	w /= n
-
-	return round(w, 2)
+	return w
 
 def createNetwork(l):
 	G = nx.complete_graph(len(l))
