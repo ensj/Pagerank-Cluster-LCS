@@ -46,7 +46,7 @@ def lcsweight(f1, f2):
 
 def createNetwork(l):
     G = nx.complete_graph(len(l))
-    G = G.to_directed()
+    #G = G.to_directed()
 
     for e in G.edges:
         G[e[0]][e[1]]['weight'] = lcsweight(l[e[0]], l[e[1]])
