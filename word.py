@@ -19,12 +19,7 @@ def percentweight(f1, f2):
     l1 = [f1[x : x + 1] for x in range(0, len(f1))]
     tree = Tree({'A': f2})
     for el in l1:
-        print("l1",l1)
-        print("EL", el)
-            
-            
         if tree.find(el):
-            print("FOUND")
             score+=1
     return score/n
 
