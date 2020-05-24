@@ -1,11 +1,14 @@
-import os
+import os # Used for the weighting algorithm and the pagerank algorithm
 import array 
-import re
-import math
+import re # regex
 
 from suffix_tree import Tree
 import networkx as nx
+
+import numpy as np # Used for visualization and ease of handling data
 import matplotlib.pyplot as plt
+
+from sklearn.manifold import MDS # Used for multidimensional scaling (visualizing clusters)
 
 # Proposed by Phil
 def percentweight(f1, f2):
@@ -37,7 +40,7 @@ def lcsweight(f1, f2):
                 break # if a sequence of k words exists between both files, break the loop and update k
         k *= 2
 
-    return w#/math.log(n, 2)
+    return w
 
 def createNetwork(l):
     G = nx.complete_graph(len(l))
@@ -60,6 +63,16 @@ def drawNetwork(names, G):
     nx.draw_networkx_edge_labels(G, pos)
     plt.show()
 
+def drawMDS(G) 
+    X = np.asarray([ [ 1/n if n > 0 else 0 for n in row ] for row in nx.adjacency_matrix(G).toarray() ])
+
+    embedding = MDS(n_components=2, dissimilarity="precomputed")
+    X_transformed = embedding.fit_transform(X)
+
+    plt.scatter(X_transformed[:,0], X_transformed[:,1])
+    plt.show()
+
+
 def wordify(filecontent):
     p = re.compile(r"\w+")
     return p.findall(filecontent)
@@ -73,6 +86,8 @@ for filename in os.listdir('input'):
             words.append(wordify(f.read()))
 
 G = createNetwork(words)
-print(names)
+#print(names)
 #print(nx.pagerank(G))
-drawNetwork(names, G)
+
+#drawNetwork(names, G)
+#drawMDS(G)
