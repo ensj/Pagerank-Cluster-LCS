@@ -8,6 +8,7 @@ import numpy as np # Used for visualization and ease of handling data
 
 from visualizer import drawNetwork, drawMDS
 
+# l: array of word lists, w: weighting mechanism
 def createNetwork(l, w, double_edge=False): 
     G = nx.complete_graph(len(l))
     if double_edge: 
@@ -30,11 +31,10 @@ for filename in os.listdir('input'):
     if(filename.endswith('.py')):
         names.append(filename)
         with open(os.path.join('input', filename)) as f:
-            words.append(wordify(f.read()))
+            words.append( wordify(f.read()))
 
 G = createNetwork(words, lcsweight)
-#print(names)
 #print(nx.pagerank(G))
 
-drawNetwork(names, G)
-#drawMDS(G)
+#drawNetwork(G, names)
+drawMDS(G, names)
